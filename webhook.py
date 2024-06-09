@@ -32,7 +32,7 @@ def topLogin(data: list) -> None:
         "embeds": [
             {
                 "title": "ログインに成功しました",
-                "description": f"連続ログイン、f"{login.login_days}" 日目です。\n\n{messageBonus}",
+                "description": f"連続ログイン、{login.login_days} 日目です。\n\n{messageBonus}",
                 "color": 563455,
                 "fields": [
                     {
