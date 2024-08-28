@@ -6,8 +6,7 @@ on:
   pull_request:
     branches: [master]
   schedule:
-    - cron: "30 19 * * *"  # 4:30 JST (前日の19:30 UTC)
-    - cron: "30 11 * * *"  # 20:30 JST (11:30 UTC)
+
 
   workflow_dispatch:
 
