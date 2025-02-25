@@ -4,7 +4,7 @@ import gzip
 import msgpack
 import main
 
-
+ 
 def getAssetBundle(assetbundle):
     data = base64.b64decode(assetbundle)
     key = b'W0Juh4cFJSYPkebJB9WpswNF51oa6Gm7'  # JP
