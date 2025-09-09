@@ -1,0 +1,21 @@
+name: Keep Repository Active
+
+on:
+  schedule:
+    - cron: '0 0 1 * *' # 毎月1日0時(JSTなら9時)に実行
+  workflow_dispatch:
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make a keepalive commit
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git clone https://github.com/${{ github.repository }} repo
+          cd repo
+          date > keepalive.txt
+          git add keepalive.txt
+          git commit -m "keepalive: $(date)"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
