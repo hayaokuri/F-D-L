@@ -2,8 +2,11 @@ name: Keep Repository Active
 
 on:
   schedule:
-    - cron: '0 0 1 * *' # 毎月1日0時(JSTなら9時)に実行
+    - cron: '0 0 1 * *' # 毎月1日0時(UTC)に実行
   workflow_dispatch:
+
+permissions:
+  contents: write # 必須: リポジトリへの書き込み権限を付与
 
 jobs:
   keepalive:
@@ -13,9 +16,18 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # リポジトリをクローン
           git clone https://github.com/${{ github.repository }} repo
           cd repo
+          
+          # 更新処理
           date > keepalive.txt
           git add keepalive.txt
           git commit -m "keepalive: $(date)"
+          
+          # 重要: Push直前に最新状態を取り込む
+          git pull origin main --rebase
+          
+          # Push実行
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
