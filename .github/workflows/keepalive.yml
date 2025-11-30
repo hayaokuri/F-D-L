@@ -18,7 +18,7 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           
           # リポジトリをクローン
-          git clone https://github.com/${{ github.repository }} repo
+          git clone -b main https://github.com/${{ github.repository }} repo
           cd repo
           
           # 更新処理
