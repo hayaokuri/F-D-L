@@ -23,7 +23,11 @@ jobs:
 
       - name: Execute main script 1
         run: |
-          python3 main.py
+          if [[ "${{ github.event.schedule }}" == "30 03 * * *" ]]; then
+              python3 main.py --Free_Gacha
+          else
+              python3 main.py
+          fi
         env:
           userIds: ${{ secrets.GAME_USERIDS }}
           authKeys: ${{ secrets.GAME_AUTHKEYS }}

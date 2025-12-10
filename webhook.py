@@ -275,6 +275,55 @@ def LTO_Gacha(servants) -> None:
     requests.post(endpoint, json=jsonData, headers=headers)
 
 
+
+def Free_Gacha(servants) -> None:
+    endpoint = main.webhook_discord_url
+    message_servant = ""
+    
+    if (len(servants) > 0):
+        servants_atlas = requests.get(
+            f"https://api.atlasacademy.io/export/JP/basic_svt.json").json()
+
+        svt_dict = {svt["id"]: svt for svt in servants_atlas}
+
+        for servant in servants:
+            objectId = servant.objectId
+            if objectId in svt_dict:
+                svt = svt_dict[objectId]
+                message_servant += f"`{svt['name']}` "
+            else:
+                continue
+
+    jsonData = {
+        "content": None,
+        "embeds": [
+            {
+                "title": "FGO每日免费单抽 - " + main.fate_region,
+                "description": f"完成每日免费单抽。列出抽卡结果.",
+                "color": 65535,
+                "fields": [
+                    {
+                        "name": "圣晶石常驻卡池",
+                        "value": f"{message_servant}",
+                        "inline": False
+                    }
+                ],
+                "thumbnail": {
+                    "url": "https://www.fate-go.jp/manga_fgo2/images/commnet_chara13_rv.png"
+                }
+            }
+        ],
+        "attachments": []
+    }
+
+    headers = {
+        "Content-Type": "application/json"
+    }
+
+    requests.post(endpoint, json=jsonData, headers=headers)
+
+
+
 def Present(name, namegift, object_id_count) -> None:
     endpoint = main.webhook_discord_url
     

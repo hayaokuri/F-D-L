@@ -196,6 +196,8 @@ xCGlz9vV3+AAQ31C2phoyd/QhvpL85p39n6Ibg==
             f'{fgourl.server_addr_}/login/top?_userId={self.user_id_}')
 
         responses = data['response']
+
+        main.logger.info(f"\n {'=' * 40} \n [+] 登录账号 \n {'=' * 40} " )
         
         with open('login.json', 'w', encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
@@ -503,6 +505,50 @@ xCGlz9vV3+AAQ31C2phoyd/QhvpL85p39n6Ibg==
             main.logger.info(f"\n {'=' * 40} \n [+] 不满足活动条件..不能参加限定召唤 \n {'=' * 40} ")
             return 
             """
+
+
+
+    def Free_Gacha(self):
+        # 
+
+        gachaId = 21001
+        gachaSubId = 0
+
+        self.builder_.AddParameter('storyAdjustIds', '[31011,31111,31211,31311,31411,31511,31611,31711,31811,31911,32011,32111,32121,32131,32141,32151,32161,32171,32181,32191,32201,32211,32221,32231,32241,32251]')
+        self.builder_.AddParameter('selectBonusList', '')
+        self.builder_.AddParameter('gachaId', str(gachaId))
+        self.builder_.AddParameter('num', '1')
+        self.builder_.AddParameter('ticketItemId', '0')
+        self.builder_.AddParameter('shopIdIndex', '1')
+        self.builder_.AddParameter('gachaSubId', str(gachaSubId))
+                
+        main.logger.info(f"\n {'=' * 40} \n [+] GachaId：{gachaId} SubId：{gachaSubId} \n {'=' * 40} ")
+        data = self.Post(f'{fgourl.server_addr_}/gacha/draw?_userId={self.user_id_}')
+                
+        responses = data['response']
+
+        servantArray = []
+        missionArray = []
+
+        for response in responses:
+            resCode = response['resCode']
+            resSuccess = response['success']
+
+            if (resCode != "00"):
+                continue
+
+            if "gachaInfos" in resSuccess:
+                for info in resSuccess['gachaInfos']:
+                    servantArray.append(
+                        gacha.gachaInfoServant(
+                            info['objectId']
+                        )
+                    )
+
+        webhook.Free_Gacha(servantArray)
+        return
+
+
 
     def drawFP(self):
         #SubID判定有点不准了.偶尔错误抽卡失败...等哪天闲暇再修
