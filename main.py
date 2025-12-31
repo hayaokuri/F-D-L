@@ -61,14 +61,13 @@ def main():
                 instance.lq003()
                 time.sleep(1)
 
-                #if "--Free_Gacha" in sys.argv:
-                    #instance.Free_Gacha()
+                if "--Free_Gacha" in sys.argv:
+                    instance.Free_Gacha()
 
                 instance.drawFP()
                 time.sleep(1)
                 #instance.LTO_Gacha()
-                instance.LTO_drawFP()
-                time.sleep(1)
+                #instance.LTO_drawFP()
 
             
                 
