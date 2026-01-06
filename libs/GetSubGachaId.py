@@ -1,8 +1,13 @@
 import requests
 import json
-import main
 
-from mytime import GetTimeStamp
+from datetime import datetime, timedelta, timezone
+tokyo_tz = timezone(timedelta(hours=9))
+
+class mytime:
+
+    def GetTimeStamp():
+        return (int)(datetime.now(tz=tokyo_tz).timestamp())
 
 def GetGachaSubIdFP():
     url = "https://raw.githubusercontent.com/DNNDHH/GSubList/Main/update.json"
@@ -13,7 +18,7 @@ def GetGachaSubIdFP():
     response = requests.get(url, headers=headers, timeout=10)
     response.raise_for_status()
     gachaList = response.json()
-    timeNow = GetTimeStamp()
+    timeNow = mytime.GetTimeStamp()
     priority = 0
     goodGacha = {}
 
@@ -30,12 +35,10 @@ def GetGachaSubIdFP():
 
     # 检查是否找到了合适的 gacha
     if not goodGacha:
-        main.logger.info("No suitable gacha found")
         return None  
     
     # 确认 'id' 键是否存在
     if "id" not in goodGacha:
-        main.logger.info("Key 'id' not found in the selected gacha")
         return None  
 
     return str(goodGacha["id"])
