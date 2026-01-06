@@ -704,7 +704,7 @@ xCGlz9vV3+AAQ31C2phoyd/QhvpL85p39n6Ibg==
     def lq003(self):
         # https://game.fate-go.jp/shop/purchase
         
-        url = 'https://git.atlasacademy.io/atlasacademy/fgo-game-data/raw/branch/JP/master/mstShop.json'
+        url = 'https://raw.githubusercontent.com/DNNDHH/GSubList/Main/Shopdate.json'
         response = requests.get(url)
         fdata = response.json()
         max_base_shop_id = None
