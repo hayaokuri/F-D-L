@@ -553,8 +553,8 @@ xCGlz9vV3+AAQ31C2phoyd/QhvpL85p39n6Ibg==
     def drawFP(self):
         #SubID判定有点不准了.偶尔错误抽卡失败...等哪天闲暇再修
         gachaSubId = GetGachaSubIdFP()
+        main.logger.info(f"\n {'=' * 40} \n [+] 友情卡池ID : {gachaSubId}\n {'=' * 40} " )
         
-
         if gachaSubId is None:
            gachaSubId = 0
             
@@ -567,7 +567,6 @@ xCGlz9vV3+AAQ31C2phoyd/QhvpL85p39n6Ibg==
         self.builder_.AddParameter('gachaSubId', gachaSubId)
         #self.builder_.AddParameter('gachaSubId', '473')
 
-        main.logger.info(f"\n {'=' * 40} \n [+] 友情卡池ID : {gachaSubId}\n {'=' * 40} " )
         data = self.Post(f'{fgourl.server_addr_}/gacha/draw?_userId={self.user_id_}')
         responses = data['response']
 
@@ -705,7 +704,7 @@ xCGlz9vV3+AAQ31C2phoyd/QhvpL85p39n6Ibg==
     def lq003(self):
         # https://game.fate-go.jp/shop/purchase
         
-        url = 'https://git.atlasacademy.io/atlasacademy/fgo-game-data/raw/branch/JP/master/mstShop.json'
+        url = 'https://raw.githubusercontent.com/DNNDHH/GSubList/Main/Shopdate.json'
         response = requests.get(url)
         fdata = response.json()
         max_base_shop_id = None
